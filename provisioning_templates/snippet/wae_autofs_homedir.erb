@@ -1,0 +1,21 @@
+<%#
+name: wae_autofs_homedir
+snippet: true
+model: ProvisioningTemplate
+organizations:
+- Default Organization
+locations:
+- Default Location
+-%>
+
+if [ -f /usr/bin/dnf ]; then
+  dnf install autofs nfs-utils -y
+else
+  yum install autofs nfs-utils -y
+fi
+
+
+echo '/-  /etc/auto.direct' > /etc/auto.master
+echo '/home/guests -soft,nfsvers=3,mountvers=3 <%= host_param("homedirnfs") %>:/nfshome' > /etc/auto.direct
+setsebool -P use_nfs_home_dirs on
+systemctl enable autofs --now

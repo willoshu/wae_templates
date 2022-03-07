@@ -1,0 +1,25 @@
+<%#
+name: wae_CloudInit
+snippet: false
+model: ProvisioningTemplate
+kind: cloud-init
+oses:
+- Rocky
+organizations:
+- Default Organization
+locations:
+- Default Location
+-%>
+
+
+#cloud-config
+hostname: <%= @host.name %>
+fqdn: <%= @host %>
+manage_etc_hosts: true
+users: {}
+runcmd:
+- |
+<%= indent(2) { snippet 'wae_fix_hosts' } -%>
+- |
+<%= indent(2) { snippet 'blacklist_kernel_modules' } %>
+

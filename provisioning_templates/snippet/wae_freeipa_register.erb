@@ -1,0 +1,13 @@
+<%#
+name: wae_freeipa_register
+snippet: true
+model: ProvisioningTemplate
+organizations:
+- Default Organization
+locations:
+- Default Location
+-%>
+
+  #register to freeipa
+  ipa-client-install --uninstall 
+  ipa-client-install -U --hostname=<%= @host.name %> --server=ipa.wae.local --domain=wae.local --mkhomedir --enable-dns-updates -p admin -w pelican1
